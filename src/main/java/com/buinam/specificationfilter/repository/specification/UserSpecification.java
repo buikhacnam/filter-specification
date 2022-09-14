@@ -36,6 +36,9 @@ public class UserSpecification  implements Specification<User> {
                 return builder.equal(root.get(criteria.getKey()), criteria.getValue());
             }
         }
+        else if (criteria.getOperation().equalsIgnoreCase("equal")) {
+            return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+        }
         return null;
     }
 }

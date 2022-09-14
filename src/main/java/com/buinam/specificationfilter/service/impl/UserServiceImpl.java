@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecifiBuilder(String name, String age, String active) {
+    public List<User> findAllBySpecifiBuilder(String name, String age, Boolean active) {
         UserSpecificationsBuilder builder = new UserSpecificationsBuilder();
         if(name != null && !name.isEmpty()) {
             builder.with("name", "like", name);
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         if(age != null && !age.isEmpty()) {
             builder.with("age", "greaterThan", age);
         }
-        if(active != null && !active.isEmpty()) {
+        if(active != null) {
             builder.with("active", "equal", active);
         }
 
