@@ -5,6 +5,7 @@ import com.buinam.specificationfilter.model.User;
 import com.buinam.specificationfilter.repository.UserRepository;
 import com.buinam.specificationfilter.repository.specification.SearchCriteria;
 import com.buinam.specificationfilter.repository.specification.UserSpecification;
+import com.buinam.specificationfilter.repository.specification.UserSpecificationsBuilder;
 import com.buinam.specificationfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecification(UserDTO userDTO) {
+    public List<User> findAllBySpecification(String name, String age, String active) {
         /*
                 {
                     "name": "kovacic",
@@ -36,14 +37,31 @@ public class UserServiceImpl implements UserService {
 
          */
         UserSpecification userSpecification = new UserSpecification(new SearchCriteria(
-                "name", "like", userDTO.getName()
+                "name", "like", name
         ));
 
         UserSpecification userSpecification2 = new UserSpecification(new SearchCriteria(
-                "age", "greaterThan", userDTO.getAge()
+                "age", "greaterThan", age
         ));
 
         return userRepository.findAll(Specification.where(userSpecification).and(userSpecification2));
 
+    }
+
+    @Override
+    public List<User> findAllBySpecifiBuilder(String name, String age, String active) {
+        UserSpecificationsBuilder builder = new UserSpecificationsBuilder();
+        if(name != null && !name.isEmpty()) {
+            builder.with("name", "like", name);
+        }
+        if(age != null && !age.isEmpty()) {
+            builder.with("age", "greaterThan", age);
+        }
+        if(active != null && !active.isEmpty()) {
+            builder.with("active", "equal", active);
+        }
+
+        Specification<User> spec = builder.build();
+        return userRepository.findAll(spec);
     }
 }

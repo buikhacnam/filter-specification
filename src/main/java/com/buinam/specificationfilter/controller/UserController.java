@@ -21,9 +21,18 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping("/allBySpecification")
-    public List<User> findAllBySpecification(@RequestBody UserDTO userDTO) {
-        return userService.findAllBySpecification(userDTO);
+    @GetMapping("/allBySpecification") //http://localhost:8080/user/allBySpecification?name=kovacic&age=20&active=
+    public List<User> findAllBySpecification(@RequestParam(required = false, defaultValue = "") String name,
+                                             @RequestParam(required = false, defaultValue = "") String age,
+                                             @RequestParam(required = false, defaultValue = "") String active) {
+        return userService.findAllBySpecification(name, age, active);
+    }
+
+    @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=kovacic&age=20&active=
+    public List<User> findAllBySpecificBuilder(@RequestParam(required = false, defaultValue = "") String name,
+                                             @RequestParam(required = false, defaultValue = "") String age,
+                                             @RequestParam(required = false, defaultValue = "") String active) {
+        return userService.findAllBySpecifiBuilder(name, age, active);
     }
 
     @PostMapping("/create")

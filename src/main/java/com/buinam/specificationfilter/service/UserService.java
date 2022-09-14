@@ -10,5 +10,7 @@ public interface UserService {
 
     User create(User user);
 
-    List<User> findAllBySpecification(UserDTO userDTO);
+    List<User> findAllBySpecification(String name, String age, String active);
+
+    List<User> findAllBySpecifiBuilder(String name, String age, String active);
 }
