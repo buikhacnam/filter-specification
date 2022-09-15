@@ -12,13 +12,11 @@ import java.util.stream.Collectors;
 
 public class EntitySpecificationsBuilder<T> {
 
-    T entity;
 
     private final List<SearchCriteria> params;
 
-    public EntitySpecificationsBuilder(T entity) {
+    public EntitySpecificationsBuilder() {
         params = new ArrayList<SearchCriteria>();
-        this.entity = entity;
     }
 
     public EntitySpecificationsBuilder with(String key, String operation, Object value) {

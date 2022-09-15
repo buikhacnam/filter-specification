@@ -48,12 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecifiBuilder(String name, Integer age, Boolean active) {
+    public List<User> findAllBySpecificBuilder(String name, Integer age, Boolean active) {
         User filterUser = new User();
         filterUser.setName(name);
         filterUser.setAge(age);
         filterUser.setActive(active);
-        EntitySpecificationsBuilder<User> builder = new EntitySpecificationsBuilder<>(filterUser);
+        EntitySpecificationsBuilder<User> builder = new EntitySpecificationsBuilder<>();
         if(name != null && !name.isEmpty()) {
             builder.with("name", "like", name);
         }
