@@ -30,9 +30,9 @@ public class UserController {
 
     @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=kovacic&age=20&active=
     public List<User> findAllBySpecificBuilder(@RequestParam(required = false, defaultValue = "") String name,
-                                             @RequestParam(required = false, defaultValue = "") String age,
+                                             @RequestParam(required = false) Integer age,
                                              @RequestParam(required = false) Boolean active) {
-        return userService.findAllBySpecifiBuilder(name, age, active);
+        return userService.findAllBySpecificBuilder(name, age, active);
     }
 
     @PostMapping("/create")

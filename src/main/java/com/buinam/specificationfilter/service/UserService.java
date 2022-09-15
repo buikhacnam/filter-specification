@@ -12,5 +12,5 @@ public interface UserService {
 
     List<User> findAllBySpecification(String name, String age, String active);
 
-    List<User> findAllBySpecifiBuilder(String name, String age, Boolean active);
+    List<User> findAllBySpecificBuilder(String name, Integer age, Boolean active);
 }

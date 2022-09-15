@@ -9,6 +9,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
+
+// WE DONT NEED TO HAVE THIS CLASS ANYMORE, SINCE WE IMPLEMENTED THE ENTITYSPECIFICATION CLASS IN USERSPECIFICATIONSBUILDER CLASS
 public class UserSpecification  implements Specification<User> {
     private SearchCriteria criteria;
 

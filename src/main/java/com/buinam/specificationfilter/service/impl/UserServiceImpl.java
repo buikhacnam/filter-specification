@@ -1,11 +1,10 @@
 package com.buinam.specificationfilter.service.impl;
 
-import com.buinam.specificationfilter.DTO.UserDTO;
 import com.buinam.specificationfilter.model.User;
 import com.buinam.specificationfilter.repository.UserRepository;
+import com.buinam.specificationfilter.repository.specification.EntitySpecificationsBuilder;
 import com.buinam.specificationfilter.repository.specification.SearchCriteria;
 import com.buinam.specificationfilter.repository.specification.UserSpecification;
-import com.buinam.specificationfilter.repository.specification.UserSpecificationsBuilder;
 import com.buinam.specificationfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -49,12 +48,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecifiBuilder(String name, String age, Boolean active) {
-        UserSpecificationsBuilder builder = new UserSpecificationsBuilder();
+    public List<User> findAllBySpecifiBuilder(String name, Integer age, Boolean active) {
+        User filterUser = new User();
+        filterUser.setName(name);
+        filterUser.setAge(age);
+        filterUser.setActive(active);
+        EntitySpecificationsBuilder<User> builder = new EntitySpecificationsBuilder<>(filterUser);
         if(name != null && !name.isEmpty()) {
             builder.with("name", "like", name);
         }
-        if(age != null && !age.isEmpty()) {
+        if(age != null) {
             builder.with("age", "greaterThan", age);
         }
         if(active != null) {
