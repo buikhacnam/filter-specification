@@ -6,6 +6,8 @@ import com.buinam.specificationfilter.model.User;
 import com.buinam.specificationfilter.repository.UserRepository;
 import com.buinam.specificationfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +30,13 @@ public class UserController {
         return userService.findAllBySpecification(name, age, active);
     }
 
-    @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=kovacic&age=20&active=
-    public List<User> findAllBySpecificBuilder(@RequestParam(required = false, defaultValue = "") String name,
-                                             @RequestParam(required = false) Integer age,
-                                             @RequestParam(required = false) Boolean active) {
-        return userService.findAllBySpecificBuilder(name, age, active);
+    @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=&age=20&active=&page=1&size=2
+    public Page<User> findAllBySpecificBuilder(@RequestParam(required = false, defaultValue = "") String name,
+                                               @RequestParam(required = false) Integer age,
+                                               @RequestParam(required = false) Boolean active, Pageable pageable)
+
+    {
+        return userService.findAllBySpecificBuilder(name, age, active, pageable);
     }
 
     @PostMapping("/create")

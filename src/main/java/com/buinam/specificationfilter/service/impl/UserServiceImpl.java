@@ -7,6 +7,8 @@ import com.buinam.specificationfilter.repository.specification.SearchCriteria;
 import com.buinam.specificationfilter.repository.specification.UserSpecification;
 import com.buinam.specificationfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecificBuilder(String name, Integer age, Boolean active) {
+    public Page<User> findAllBySpecificBuilder(String name, Integer age, Boolean active, Pageable pageable) {
         User filterUser = new User();
         filterUser.setName(name);
         filterUser.setAge(age);
@@ -63,8 +65,9 @@ public class UserServiceImpl implements UserService {
         if(active != null) {
             builder.with("active", "equal", active);
         }
-
         Specification<User> spec = builder.build();
-        return userRepository.findAll(spec);
+        return userRepository.findAll(spec, pageable);
     }
+
+
 }
