@@ -30,13 +30,17 @@ public class UserController {
         return userService.findAllBySpecification(name, age, active);
     }
 
-    @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=&age=20&active=&page=1&size=2
+    @GetMapping("/specific-builder") //http://localhost:8080/user/specific-builder?name=&age=&active=&page=1&size=10&sortBy=&sortDirection=desc
     public Page<User> findAllBySpecificBuilder(@RequestParam(required = false, defaultValue = "") String name,
                                                @RequestParam(required = false) Integer age,
-                                               @RequestParam(required = false) Boolean active, Pageable pageable)
+                                               @RequestParam(required = false) Boolean active,
+                                               Pageable pageable,
+                                               @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                               @RequestParam(required = false, defaultValue = "DESC") String sortDirection
+    )
 
     {
-        return userService.findAllBySpecificBuilder(name, age, active, pageable);
+        return userService.findAllBySpecificBuilder(name, age, active, pageable, sortBy, sortDirection);
     }
 
     @PostMapping("/create")

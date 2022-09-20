@@ -8,7 +8,9 @@ import com.buinam.specificationfilter.repository.specification.UserSpecification
 import com.buinam.specificationfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAllBySpecificBuilder(String name, Integer age, Boolean active, Pageable pageable) {
+    public Page<User> findAllBySpecificBuilder(String name, Integer age, Boolean active, Pageable pageable, String sortBy, String sortDirection) {
         User filterUser = new User();
         filterUser.setName(name);
         filterUser.setAge(age);
@@ -65,9 +67,18 @@ public class UserServiceImpl implements UserService {
         if(active != null) {
             builder.with("active", "equal", active);
         }
-        Specification<User> spec = builder.build();
-        return userRepository.findAll(spec, pageable);
-    }
 
+        Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
+
+        if (sortDirection.equals("asc")) {
+            sort = Sort.by(Sort.Direction.ASC, sortBy);
+        } 
+
+        Pageable sortedByName =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        Specification<User> spec = builder.build();
+        return userRepository.findAll(spec, sortedByName);
+    }
 
 }

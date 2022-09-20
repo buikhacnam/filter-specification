@@ -14,6 +14,6 @@ public interface UserService {
 
     List<User> findAllBySpecification(String name, String age, String active);
 
-    Page<User> findAllBySpecificBuilder(String name, Integer age, Boolean active, Pageable pageable);
+    Page<User> findAllBySpecificBuilder(String name, Integer age, Boolean active, Pageable pageable, String sortBy, String sortDirection);
 
 }
